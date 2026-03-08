@@ -1,6 +1,6 @@
 import { createTransport } from "nodemailer";
 import dotenv from "dotenv"
-const transporter = nodemailer.createTransport({
+const transporter = createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
   auth: {

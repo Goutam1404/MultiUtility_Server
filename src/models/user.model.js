@@ -15,6 +15,7 @@ const userSchema = new Schema(
       unique: true,
     },
     password: {
+      type: String,
       required: [true, "Password is required"],
       minlength: 5,
       trim: true,
@@ -47,7 +48,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", async (next) => {
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next;
   }
