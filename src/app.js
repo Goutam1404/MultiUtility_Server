@@ -1,6 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import userRouter from "./routes/user.route.js";
+import notesRouter from "./routes/note.route.js";
 const app=express();
 app.use(
   cors({
@@ -18,5 +20,11 @@ app.use(
 );
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.send("In home directory ");
+  console.log("In home directory ");
+});
 
+app.use("/user", userRouter);
+app.use("/note", notesRouter);
 export default app;

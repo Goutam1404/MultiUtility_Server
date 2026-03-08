@@ -16,9 +16,9 @@ connectDb()
     process.exit(1);
   });
 
-app.get("/", (req, res) => {
-  // res.send("In home directory ");
-  console.log("In home directory ");
-});
+// app.get("/", (req, res) => {
+//   // res.send("In home directory ");
+//   console.log("In home directory ");
+// });
 
-app.use("/user", userRouter);
+// app.use("/user", userRouter);
