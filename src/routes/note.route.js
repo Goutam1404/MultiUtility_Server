@@ -1,6 +1,6 @@
 import {Router} from "express";
 import { useAuth } from "../middleware/user.middleware.js";
-import { createNote, deleteNote, getAllNote, togglePin, updateNote } from "../controllers/note.controller";
+import { createNote, deleteNote, getAllNote, togglePin, updateNote } from "../controllers/note.controller.js";
 
 const notesRouter= Router();
 notesRouter.get("/",useAuth,getAllNote);

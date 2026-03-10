@@ -3,7 +3,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import userRouter from "./routes/user.route.js";
 import notesRouter from "./routes/note.route.js";
-const app=express();
+import todosRouter from "./routes/todo.route.js";
+import taskRouter from "./routes/task.route.js";
+const app = express();
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN?.split(",") || "http://localhost:5173/",
@@ -25,6 +27,8 @@ app.get("/", (req, res) => {
   console.log("In home directory ");
 });
 
-app.use("/user", userRouter);
-app.use("/note", notesRouter);
+app.use("/api/user", userRouter);
+app.use("/api/note", notesRouter);
+app.use("/api/todo", todosRouter);
+app.use("/api/task/", taskRouter);
 export default app;
