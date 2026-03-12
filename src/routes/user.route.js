@@ -11,12 +11,12 @@ import {
 import { useAuth } from "../middleware/user.middleware.js";
 
 const userRouter = Router();
-userRouter.post("/register", registerUser);
-userRouter.post("/login", loginUser);
-userRouter.post("/logout", logoutUser);
-userRouter.post("/sendOtp", useAuth, sendOtp);
-userRouter.post("/verifyMail", useAuth, verifyMail);
+userRouter.post("/register", registerUser); //email, password, username
+userRouter.post("/login", loginUser); //email password
+userRouter.post("/logout", useAuth, logoutUser);
+userRouter.post("/sendOtp", useAuth, sendOtp); //otp to user mail via req.userID
+userRouter.post("/verifyMail", useAuth, verifyMail); //otp
 userRouter.delete("/delete-account", useAuth, deleteUser);
-userRouter.get("/user-info", useAuth, userInfo);
+userRouter.get("/user-info", useAuth, userInfo); 
 
 export default userRouter;

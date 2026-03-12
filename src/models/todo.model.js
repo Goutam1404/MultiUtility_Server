@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import { Task } from "./task.model.js";
 
 const todoSchema = new Schema(
@@ -18,4 +18,4 @@ const todoSchema = new Schema(
   { timestamps: true }
 );
 
-export const Todo = mongoose.Model("Todo", todoSchema);
+export const Todo = new model("Todo", todoSchema);

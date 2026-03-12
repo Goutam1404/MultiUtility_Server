@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 const notesSchema = new Schema(
   {
@@ -8,7 +8,7 @@ const notesSchema = new Schema(
       trim: true,
     },
     description: {
-      tpye: String,
+      type: String,
       required: true,
       trim: true,
     },
@@ -27,4 +27,4 @@ const notesSchema = new Schema(
   }
 );
 
-export const Note = mongoose.model("Note", notesSchema);
+export const Note = new model("Notes", notesSchema);

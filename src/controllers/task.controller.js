@@ -1,12 +1,14 @@
 import { Task } from "../models/task.model.js";
-import { Todo } from "../models/todo.model";
+import { Todo } from "../models/todo.model.js";
 
 const addTask = async (req, res) => {
   try {
     //fetching user id and todo id
     const { todoId } = req.params;
-    const { title } = req.body;
-    if (!title) {
+    console.log(`Todo Id for creating task:${todoId}`);
+
+    const { taskText } = req.body;
+    if (!taskText) {
       return res
         .status(400)
         .json({ success: false, message: "Task is required" });
@@ -19,7 +21,7 @@ const addTask = async (req, res) => {
         .json({ success: false, message: "Todo not found" });
     }
     //Creating the task
-    const task = await Task.create({ task: title, todo: todoId });
+    const task = await Task.create({ task: taskText, todo: todoId });
     await task.save();
     // table.tasks.push({ task });
     // await table.save();
@@ -62,15 +64,16 @@ const updateTask = async (req, res) => {
     const { taskText } = req.body;
     const { todoId, taskId } = req.params;
     //finding the task and updating it
+    console.log("Searching for Todo:", todoId, "and Task:", taskId, "Task text:",taskText);
     const task = await Task.findOneAndUpdate(
       {
-        todos: todoId,
+        // todos: todoId,
         _id: taskId,
       },
       {
         $set: { task: taskText },
       },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
     if (!task) {
       return res
