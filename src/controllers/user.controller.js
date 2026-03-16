@@ -80,7 +80,12 @@ const loginUser = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "user logged in",
-      user,
+      userInfo: {
+        name: user.username,
+        email: user.email,
+        isAccountVerified: user.isAccountVerified,
+        isLoggedIn: user.isLoggedIn,
+      },
     });
   } catch (error) {
     console.log(error);
@@ -228,7 +233,7 @@ const userInfo = async (req, res) => {
       });
     }
     return res.status(200).json({
-      userData: {
+      userInfo: {
         name: user.username,
         email: user.email,
         isAccountVerified: user.isAccountVerified,

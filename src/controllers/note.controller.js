@@ -2,14 +2,15 @@ import { Note } from "../models/note.model.js";
 
 const createNote = async (req, res) => {
   try {
-    const { title, description } = req.body();
-    if (!title || !description) {
+    const { title, content } = req.body;
+    // const id = req.userId;
+    if (!title || !content) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
-    const note = await Note.create({ title, description });
+    const note = await Note.create({ title, content, user: req.userId });
     await note.save();
 
     return res.status(200).json({
@@ -18,6 +19,8 @@ const createNote = async (req, res) => {
       note,
     });
   } catch (error) {
+    console.log(error);
+
     return res.status(500).json({
       success: false,
       message: "Failed to create a note",
@@ -30,11 +33,11 @@ const updateNote = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.userId;
-    const { title, description } = req.body;
+    const { title, content } = req.body;
 
     const note = await Note.findOneAndUpdate(
       { _id: id, user: userId },
-      { $set: { title, description } },
+      { $set: { title, content } },
       { new: true, runValidators: true }
     );
     if (!note) {
@@ -86,7 +89,7 @@ const getAllNote = async (req, res) => {
   try {
     const userId = req.userId;
 
-    const notes = await Note.find({ user: userId });
+    const notes = await Note.find({ user: userId }).sort('-createdAt');
 
     return res.status(200).json({
       success: true,
@@ -94,7 +97,13 @@ const getAllNote = async (req, res) => {
       count: notes.length,
       data: notes,
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:"Failed to fetch the notes",
+      error:error.message
+    })
+  }
 };
 
 const togglePin = async (req, res) => {
