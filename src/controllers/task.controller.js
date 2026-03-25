@@ -8,6 +8,8 @@ const addTask = async (req, res) => {
     console.log(`Todo Id for creating task:${todoId}`);
 
     const { taskText } = req.body;
+    console.log(taskText);
+    
     if (!taskText) {
       return res
         .status(400)
@@ -46,11 +48,17 @@ const getTask = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Table not found" });
     }
-    return res
-      .status(200)
-      .json({ success: true, message: "All task found", tasks });
+    const todo = await Todo.findById(todoId);
+    return res.status(200).json({
+      success: true,
+      message: "All task found",
+      data: {
+        title: todo.title,
+        tasks,
+      },
+    });
   } catch (error) {
-    return res.stauts(500).json({
+    return res.status(500).json({
       success: false,
       message: "Error in fethcing tasks",
       error: error.message,
@@ -64,7 +72,19 @@ const updateTask = async (req, res) => {
     const { taskText } = req.body;
     const { todoId, taskId } = req.params;
     //finding the task and updating it
-    console.log("Searching for Todo:", todoId, "and Task:", taskId, "Task text:",taskText);
+    console.log(
+      "Searching for Todo:",
+      todoId,
+      "and Task:",
+      taskId,
+      "Task text:",
+      taskText
+    );
+    if (!taskText) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Task text is required" });
+    }
     const task = await Task.findOneAndUpdate(
       {
         // todos: todoId,
@@ -73,7 +93,7 @@ const updateTask = async (req, res) => {
       {
         $set: { task: taskText },
       },
-      { returnDocument: 'after', runValidators: true }
+      { returnDocument: "after", runValidators: true }
     );
     if (!task) {
       return res
@@ -123,6 +143,8 @@ const deleteTask = async (req, res) => {
     //finding the task
     //deleteing the task
     const task = await Task.findByIdAndDelete({ todo: todoId, _id: taskId });
+    console.log(task);
+    
     if (!task) {
       return res
         .status(404)

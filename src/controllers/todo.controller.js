@@ -73,6 +73,8 @@ const updateTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
   try {
     const { todoId } = req.params;
+    // console.log(todoId);
+    
     const todo = await Todo.findOneAndDelete({ _id: todoId, user: req.userId });
     if (!todo) {
       return res
