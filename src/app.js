@@ -10,7 +10,7 @@ dotenv.config({ path: "./.env" });
 const app = express();
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN?.split(","),
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
