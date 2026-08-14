@@ -9,7 +9,7 @@ const addTask = async (req, res) => {
 
     const { taskText } = req.body;
     console.log(taskText);
-    
+
     if (!taskText) {
       return res
         .status(400)
@@ -144,7 +144,7 @@ const deleteTask = async (req, res) => {
     //deleteing the task
     const task = await Task.findByIdAndDelete({ todo: todoId, _id: taskId });
     console.log(task);
-    
+
     if (!task) {
       return res
         .status(404)

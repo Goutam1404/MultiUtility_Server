@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import transporter from "../utils/nodemailer.js";
 
 const signToken = (userId) => {
-  return jwt.sign({userId}, process.env.JWT_SECRET, {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 };
@@ -33,7 +33,7 @@ const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    
+
     return res.status(500).json({
       success: false,
       message: "Error in registering the user",
@@ -89,7 +89,7 @@ const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    
+
     return res.status(400).json({
       success: false,
       message: "Failed to login the user",
@@ -226,6 +226,8 @@ const verifyMail = async (req, res) => {
 const userInfo = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
+    console.log("Fetching user data:" + user);
+
     if (!user) {
       return res.status(400).json({
         success: true,

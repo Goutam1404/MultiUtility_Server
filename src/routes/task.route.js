@@ -12,8 +12,8 @@ const taskRouter = Router();
 
 taskRouter.get("/:todoId", useAuth, getTask);
 taskRouter.post("/:todoId", useAuth, addTask);
-taskRouter.post("/edit/:todoId/:taskId", useAuth, updateTask);
-taskRouter.post("/toggle/:todoId/:taskId", useAuth, toggleTask);
+taskRouter.patch("/edit/:todoId/:taskId", useAuth, updateTask);
+taskRouter.patch("/toggle/:todoId/:taskId", useAuth, toggleTask);
 taskRouter.delete("/delete/:todoId/:taskId", useAuth, deleteTask);
 
 export default taskRouter;
