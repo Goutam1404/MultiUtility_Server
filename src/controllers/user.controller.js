@@ -68,12 +68,19 @@ const loginUser = async (req, res) => {
       });
     }
 
+// res.cookie("token", token, {
+//   httpOnly: true,
+//   secure: isProduction ? true : false, // Must be true when sameSite is "none"
+//   sameSite: isProduction ? "none" : "lax", // "none" enables cross-site cookies (Vercel -> Render)
+//   maxAge: 24 * 60 * 60 * 1000, // 1 day
+// });
+    
     const token = signToken(user._id);
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      sameSite: "none",
+      maxAge: 7* 24 * 60 * 60 * 1000, // 1 day
     });
     user.isLoggedIn = true;
     await user.save();
