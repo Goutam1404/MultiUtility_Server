@@ -8,14 +8,17 @@ import todosRouter from "./routes/todo.route.js";
 import taskRouter from "./routes/task.route.js";
 dotenv.config({ path: "./.env" });
 const app = express();
+
+console.log(process.env.CORS_ORIGIN);
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(
   express.json({
