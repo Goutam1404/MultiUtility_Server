@@ -80,7 +80,8 @@ const loginUser = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      maxAge: 7* 24 * 60 * 60 * 1000, // 1 day
+      partitioned:true,
+      maxAge: 7* 24 * 60 * 60 * 1000, // 7 day
     });
     user.isLoggedIn = true;
     await user.save();
